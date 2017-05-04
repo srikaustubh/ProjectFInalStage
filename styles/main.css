@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+}
+div.wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
+header {
+	width: 100%;
+} 
+
+
+header table {
+	width:100%;
+}
+header h1 {
+	letter-spacing: 4px;
+	font-size: 72px;
+} 
+
+nav ul {
+	clear:both;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	list-style: none;
+	float: left;
+	font-size: 93%;
+}
+
+nav ul li {
+}
+
+nav ul li a{
+	display: block;
+	height:auto;
+	font-weight: bold;
+	color: #000;
+	border-right: 1px solid #bababa;
+	padding: .735em 3.5em; /* 10px 15px */
+	text-decoration: none;
+}
+
+
+nav form {
+	padding: 9px 50px;
+}
+nav {
+	clear:both;	
+}
+
+#col1 {
+	float: left;
+	width: 40%;
+	margin: 1em 1em 1em 2em;
+}
+
+#col2 {
+	float: left;
+	width: 40%;
+	margin: 1em 2em 0 0;
+}
+
+footer {
+	clear:both;
+}
+
+footer p {
+	padding: .5em 0 .5em .5em;
+	background-repeat: repeat-x;
+	position: bottom;
+}
+
