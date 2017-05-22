@@ -31,7 +31,7 @@ if( isset($_POST["username"])&& isset($_POST["username"]) )
 }
 if (isset($_SESSION['valid_user']))
 {
-  header("location: members_only.php");  
+  header("location: about_us.php");  
 }
 else
 {
