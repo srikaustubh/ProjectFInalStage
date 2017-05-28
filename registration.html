@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>New membership</title>
+<script>
+	function checkRePassword(document) {	
+	  var pwd = document.getElementById("password");
+  	  var pwd_msg = document.getElementById('pwd_msg');
+	  var repwd = document.getElementById("rePassword");	  
+	  if (pwd.value != repwd.value) {
+		pwd_msg.innerHTML = "The two passwords are not the same. Please re-enter both now";
+		repwd.value = "";
+		pwd.focus();
+		return false;
+	  }
+	  else {
+		pwd_msg.innerHTML = "";  
+	  }  
+	  return true;
+	}	
+
+	function validateInfo(document) { 
+	  if (checkRePassword(document))
+	  { 
+		return true;
+	  }
+	  return false;
+	}	
+</script>
+</head>
+<body>
+<p><i>Fields marked with an asterisk (*) must be entered.</i></p>
+<form action="registration_process.php" method="post">
+ <table border="0">
+	<tr>
+    	<td align="right">* ID:</td>
+    	<td><input type="text" id="id" name="id" required></td>
+	</tr>
+     <tr>
+    	<td align="right">* Type:</td>
+    	<td><select id="type" name="type">
+  <option value="mr.">Faculity</option>
+  <option value="mrs.">Student</option>
+       </select></td>
+	</tr>
+	<tr>
+    	<td align="right">* First name:</td>
+    	<td><input type="text" name="fname" id="fname" required></td>
+	</tr>
+    <tr>
+    	<td align="right">* Last name:</td>
+    	<td><input type="text" name="lname" id="lname" required></td>
+	</tr>
+    <tr>
+    	<td align="right">* Initial:</td>
+    	<td><select id="initial" name="initial">
+        <option value="mr.">ms.</option>
+  <option value="mr.">mr.</option>
+  <option value="mrs.">mrs.</option>
+       </select></td>
+	</tr>
+    <tr>
+    	<td align="right">* Phone number (format: xxxx-xxx-xxxx):</td>
+    	<td><input type="tel" pattern="^\d{4}-\d{3}-\d{4}$" name="pnumber" id="pnumber" required></td>
+	</tr>
+    <tr>
+    	<td align="right">* Email:</td>
+    	<td><input type="email" name="email" id="email" required></td>
+	</tr>
+    <tr>
+    	<td align="right">* DOB:</td>
+    	<td><input type="date" name="dob" id="dob" required></td>
+	</tr>
+	<tr>
+    	<td align="right">* Password:</td>
+    	<td><input type="password" id="password" name="password" required></td>
+        <td id="pwd_msg" style="color:red;"></td>
+	</tr>
+	<tr>
+    	<td align="right">* Re-try:</td>
+    	<td><input type="Password" id="rePassword" name="rePassword" onChange="checkRePassword(document)"></td>
+	</tr>
+	<tr>
+    	<td align="right"><input type="submit" name="submit" value="Submit" onClick="return validateInfo(document)"></td>
+    	<td><input type="reset" name="reset" value="Clear"></td>
+	</tr>
+  </table> 
+</form>
+</body>
+</html>
+
