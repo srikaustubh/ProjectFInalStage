@@ -1,6 +1,10 @@
 <?php
 	session_start();
-	include_once('config.php');	
+	if (!isset($_SESSION['userid']) || empty($_SESSION['userid']))
+	{
+		$_SESSION['invalid']='sell';
+		header('Location: login.php');
+	}
 ?>
 <!doctype html>
 <html>
@@ -33,18 +37,19 @@
 <div class="wrapper">
 <header>
 <table>
-<tr><td><img src="images/logo.png"></td><td><p>JCUB Book Store</p></td><td style="text-align:right; list-style:none;">
+<tr><td><img src="images/logo.png"></td><td><p>JCUB Book Store</p></td><td style="text-align:right;">
 <?php
 	if (isset($_SESSION['userid']))
   	{
-		echo "logged in as " . $_SESSION['userid'] . "<br/> <a href = \"logout.php\" style=\"text-align:right; list-style:none;\">Logout</a>"; 
+		echo "logged in as " . $_SESSION['userid'] . "<br/> <a href = \"logout.php\">Logout</a>"; 
   	}
 	else 
 	{
-		echo "<a href=\"login.php\" style=\"text-align:right;\">login</a></td><td><a href=\"register.php\">Register</a>";
+		echo "<a href=\"login.php\" style=\"text-align:right;\">login</a>";
 	}
 ?> </td></tr>
 </table>
+
 </header>
 <nav>
 <ul>
@@ -56,53 +61,34 @@
 <li><a href="contactus.php" id="5" onClick="nav_li_selected(5)">Contact US</a></li>
 </ul>
 </nav>
- <div id ="content-wrapper">
-<section id="col1">
-<h3>Welcome to JCU Book Store </h3>
-<p>Here you can buy and sell used books. its completely free.. to try please register and login</p>
-<p>List of features:</p>
-<ul>
-	<li>Register</li>
-    <li>Login/Logout</li>
-    <li>Buy Books</li>
-    <li>Sell/Donate Books</li>
-</ul>
-<p>you wont be able to access buy and sell books pages if you are not a member</p>
-</section>
-<section id="col2">
-<?php
-//make the database connection
-$conn  = db_connect();
-
-//create and execute a query
-$sql = "SELECT book_title,book_author,book_desc,book_price FROM book;";
-$result = $conn -> query($sql);
-
-print "<table border = 1>\n";
-
-//get field names
-print "<tr>\n";
-while ($field = $result -> fetch_field())
-{
-  print "<th>" . strtoupper($field->name) . "</th>\n";
-} // end while
-print "</tr>\n\n";
-
-//get row data as an associative array
-while ($row = $result -> fetch_assoc()){
-  print "<tr>\n";
-  //look at each field
-  foreach ($row as $col=>$val){
-    print "  <td>$val</td>\n";
-	
-  } // end foreach
-  print "</tr>\n\n";
-}// end while
-
-print "</table>\n";
-$conn -> close();
-?>
-</section>
+<div id ="content-wrapper">
+    <p><i>Fields marked with an asterisk (*) must be entered.</i></p>
+    <p><i>If you are willing to donate books ignore the price field.</i></p>
+    <form action="sellprocess.php" method="post">
+     <table border="0">
+        <tr>
+            <td align="right">* Book name:</td>
+            <td><input type="text" id="id" name="bookname" required></td>
+        </tr>
+        <tr>
+            <td align="right">* Book Description:</td>
+            <td><input type="text" name="bookdesc"  required></td>
+        </tr>
+        <tr>
+            <td align="right">* Author name:</td>
+            <td><input type="text" name="authorname"  required></td>
+        </tr>
+        <tr>
+            <td align="right"> Book Price:</td>
+            <td><input type="text" name="bookprice" id="lname" ></td>
+        </tr>
+        
+        <tr>
+            <td align="right"><input type="submit" name="submit" value="Submit" ></td>
+            <td><input type="reset" name="reset" value="Clear"></td>
+        </tr>
+      </table> 
+    </form>
 </div>
 <footer>
 <div id="links-wrapper">
@@ -137,7 +123,3 @@ $conn -> close();
 </div>
 </body>
 </html>
-<?php
-	if(isset($_SESSION['invalid']))
-		unset($_SESSION['invalid']);
-?>

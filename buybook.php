@@ -1,6 +1,12 @@
-<?php
+<?php 
+
 	session_start();
-	include_once('config.php');	
+	include_once('config.php');
+	if (!isset($_SESSION['userid']) || empty($_SESSION['userid']))
+	{
+		$_SESSION['invalid']='buy';
+		header('Location: login.php');
+	}	
 ?>
 <!doctype html>
 <html>
@@ -33,11 +39,11 @@
 <div class="wrapper">
 <header>
 <table>
-<tr><td><img src="images/logo.png"></td><td><p>JCUB Book Store</p></td><td style="text-align:right; list-style:none;">
+<tr><td><img src="images/logo.png"></td><td><p>JCUB Book Store</p></td><td style="text-align:right;">
 <?php
 	if (isset($_SESSION['userid']))
   	{
-		echo "logged in as " . $_SESSION['userid'] . "<br/> <a href = \"logout.php\" style=\"text-align:right; list-style:none;\">Logout</a>"; 
+		echo "logged in as " . $_SESSION['userid'] . "<br/> <a href = \"logout.php\">Logout</a>"; 
   	}
 	else 
 	{
@@ -48,28 +54,18 @@
 </header>
 <nav>
 <ul>
-<li><a href="index.php" id="0" onClick="nav_li_selected(0)">Home</a></li>
-<li><a href="register.php" id="1" onClick="nav_li_selected(1)">Register</a></li>
-<li><a href="buybook.php" id="2" onClick="nav_li_selected(2)">Buy Books</a></li>
-<li><a href="sell_books.php" id="3" onClick="nav_li_selected(3)">Sell Books</a></li>
-<li><a href="aboutus.php" id="4" onClick="nav_li_selected(4)">About US</a></li>
-<li><a href="contactus.php" id="5" onClick="nav_li_selected(5)">Contact US</a></li>
+    <li><a href="index.php" id="0" onClick="nav_li_selected(0)">Home</a></li>
+    <li><a href="register.php" id="1" onClick="nav_li_selected(1)">Register</a></li>
+    <li><a href="buybook.php" id="2" onClick="nav_li_selected(2)">Buy Books</a></li>
+    <li><a href="sell_books.php" id="3" onClick="nav_li_selected(3)">Sell Books</a></li>
+    <li><a href="aboutus.php" id="4" onClick="nav_li_selected(4)">About US</a></li>
+    <li><a href="contactus.php" id="5" onClick="nav_li_selected(5)">Contact US</a></li>
+<li></li>
 </ul>
 </nav>
  <div id ="content-wrapper">
-<section id="col1">
-<h3>Welcome to JCU Book Store </h3>
-<p>Here you can buy and sell used books. its completely free.. to try please register and login</p>
-<p>List of features:</p>
-<ul>
-	<li>Register</li>
-    <li>Login/Logout</li>
-    <li>Buy Books</li>
-    <li>Sell/Donate Books</li>
-</ul>
-<p>you wont be able to access buy and sell books pages if you are not a member</p>
-</section>
-<section id="col2">
+
+<h1>Show Books</h1>
 <?php
 //make the database connection
 $conn  = db_connect();
@@ -96,13 +92,13 @@ while ($row = $result -> fetch_assoc()){
     print "  <td>$val</td>\n";
 	
   } // end foreach
+   echo "  <td><input type=\"submit\" value=\"Buy\"></td>\n";
   print "</tr>\n\n";
 }// end while
 
 print "</table>\n";
 $conn -> close();
 ?>
-</section>
 </div>
 <footer>
 <div id="links-wrapper">
@@ -137,7 +133,3 @@ $conn -> close();
 </div>
 </body>
 </html>
-<?php
-	if(isset($_SESSION['invalid']))
-		unset($_SESSION['invalid']);
-?>
